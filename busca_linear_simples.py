@@ -1,31 +1,45 @@
 """
-Busca Linear - Procurando livros em biblioteca desorganizada
-   Entrada: 
+Busca Linear com Sentinela - Procurando livros em biblioteca desorganizada
+   Entrada:
             livros:     arranjo
-            qtd_livros: numero de elementos do arranjo
+            n: numero de elementos do arranjo
             procurado:  valor que buscamos
-    Saída: 
-        um índice com a posição de procurado(2) ou NOT_FOUND(-1)
+    Saída:
+        um índice com a posição de procurado ou NOT_FOUND
     PSEUDO-CÓDIGO:
-        resposta = NOT_FOUND
-        para cada i indo de 1ª a qtd_livros em ordem:
-            se livros[i]== procurado então resposta=i
-        return resposta
+        salve livros[n]
+        atribua procurado em livros[n]
+        i=1
+        Enquanto livros[i]!=procurado
+            i++
+        Restaura livros[n] de ultimo
+        se i<n ou livros[n]==procurado return i
+        senao return NOT_FOUND
     Complexidade:
-        O(n) tempo
-        pior caso 
+        O(n) em tempo
 """
-#def busca_linear(livros,qtd_livros,procurado):
-#    resposta = -1
-def busca_linear(livros,qtd_livros,procurado):
-    retorno = -1
-    for i in range(qtd_livros):
-        if livros[i] == procurado:
-            retorno = i
-    return retorno        
 
-livros = ['shakespeare','machado de assis','lima barreto','charles dickens']
-qtd_livros = 4
-procurado = 'shakespeare'
-resposta = busca_linear(livros,qtd_livros,procurado)
-print(resposta)
+
+def busca_linear_sentinela(livros, n, procurado):
+    ultimo = livros[n - 1]
+    livros[n - 1] = procurado
+    i = 0
+    while livros[i] != procurado:
+        i += 1
+    livros[n - 1] = ultimo
+    if i < n - 1 or livros[n - 1] == procurado:
+        return i
+    else:
+        return -1
+
+
+livros = ['shakespeare', 'julio verne', 'lima barreto', 'machado de assis', 'charles dickens']
+n = 5
+procurado = 'julio verne'
+resultado = busca_linear_sentinela(livros, n, procurado)
+
+
+if resultado == -1:
+    print('NOT FOUND')
+else:
+    print(f"O livro {procurado} esta na posição {resultado + 1}")
